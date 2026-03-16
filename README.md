@@ -4,13 +4,13 @@ VOZIA es una potente aplicación de escritorio diseñada para agilizar la creaci
 
 ## 📸 Vista Previa
 
-![Librería de Archivos](screenshots/library.png)
+![Librería de Archivos](./screenshots/library.png)
 *Gestión centralizada de audios y subtítulos.*
 
-![Conversión Texto a Voz](screenshots/tts.png)
+![Conversión Texto a Voz](./screenshots/tts.png)
 *Generación de voces premium con Edge-TTS.*
 
-![Generación de Subtítulos](screenshots/subtitles.png)
+![Generación de Subtítulos](./screenshots/subtitles.png)
 *Transcripción inteligente con Whisper (Base/Medium).*
 
 ## 🚀 Características Principales
@@ -25,14 +25,15 @@ VOZIA es una potente aplicación de escritorio diseñada para agilizar la creaci
 ## 🛠️ Requisitos
 
 - Python 3.10+
-- FFmpeg (instalado y configurado en el PATH)
-- Node.js (solo si deseas modificar el frontend)
+- **OpenAI Whisper** (para transcripción de audio)
+- **FFmpeg** (instalado y configurado en el PATH)
+- **Node.js** (solo si deseas modificar el frontend)
 
 ## 📦 Instalación
 
 1.  **Clonar el repositorio**:
     ```bash
-    git clone https://github.com/TU_USUARIO/app_VOZIA.git
+    git clone https://github.com/cryptokgame/app_VOZIA.git
     cd app_VOZIA
     ```
 
