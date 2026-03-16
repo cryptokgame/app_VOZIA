@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: radial-gradient(circle at center, black 28%, transparent 88%);
+}
+
+.panel-sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 28%, transparent 70%, rgba(255, 255, 255, 0.08));
+}
+
+.btn-animated {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0) scale(1);
+  will-change: transform, box-shadow, filter;
+}
+
+.btn-animated::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform 0.55s ease;
+  pointer-events: none;
+}
+
+.btn-animated:hover {
+  transform: translateY(-2px) scale(1.01);
+  filter: saturate(1.05);
+}
+
+.btn-animated:hover::after {
+  transform: translateX(130%);
+}
+
+.btn-animated:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+.btn-animated:focus-visible {
+  outline: 2px solid rgba(56, 189, 248, 0.9);
+  outline-offset: 2px;
+}
+
+.badge-pulse {
+  box-shadow: 0 0 0 rgba(52, 211, 153, 0.35);
+  animation: pulse-ring 2s infinite;
+}
+
+.range-accent {
+  appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.75), rgba(168, 85, 247, 0.75));
+}
+
+.range-accent::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 3px solid white;
+  background: linear-gradient(135deg, rgb(34, 211, 238), rgb(139, 92, 246));
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.28);
+  cursor: pointer;
+}
+
+.range-accent::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 3px solid white;
+  background: linear-gradient(135deg, rgb(34, 211, 238), rgb(139, 92, 246));
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.28);
+  cursor: pointer;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(52, 211, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+}
+
+/* Fix crítico para Qt WebEngine (pywebview en Windows):
+   Cuando se abre un <select> nativo, Qt recalcula el layout y expande
+   el panel <section> padre infinitamente. Fijar la altura a fit-content
+   evita ese comportamiento. */
+section {
+  height: fit-content;
+  min-height: 0;
+  contain: layout;
+}
+
+/* Fijar el select para que no afecte al layout del contenedor padre */
+select {
+  cursor: pointer;
+  max-height: 3em;
+  position: relative;
+  z-index: 1;
+}

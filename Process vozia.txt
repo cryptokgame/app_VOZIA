@@ -1,0 +1,59 @@
+LOG DE PROCESO - VOZIA (REBORN)
+================================
+
+FASE 1: RECONSTRUCCIÓN Y PARIDAD ESTÉTICA
+---------------------------------------
+1. Identificación de la Plantilla: Se utilizó como referencia la "Plantilla de la app VOZIA" para restaurar la apariencia premium.
+2. Implementación de index.css: Se aplicó el sistema de diseño basado en Tailwind CSS con gradientes, sombras suaves (panel-sheen) y fuentes modernas (Inter).
+3. Estructura de App.tsx: Se reconstruyó el frontend en React dividiendo la interfaz en tres columnas principales:
+   - Sidebar: Gestión de archivos de la librería.
+   - Centro: Generación de Audio (TTS) y configuración.
+   - Derecha: Procesamiento de Audio y Subtítulos.
+
+FASE 2: FUNCIONALIDAD DEL BACKEND (api.py)
+----------------------------------------
+1. Motor TTS: Integración con edge-tts para generación de audio.
+2. Procesamiento de Audio: Implementación de limpieza de silencios con pydub/ffmpeg.
+3. Subtitulado (Whisper): Integración del modelo Whisper (medium) para transcripciones con timestamps precisos.
+4. Generación de Formatos: Implementación de exportación dual simultánea (.srt y .txt sincronizados).
+5. Sistema de Archivos: Lógica de nombres seguros y limpieza de librería.
+
+FASE 3: MEJORAS DE UI Y ESTABILIDAD (ROUND 1)
+-------------------------------------------
+1. Fechas Relativas: Cambio de formato de fecha a "hace 5 min", "hace 1 hora", etc. en la librería lateral.
+2. Duración de Audio: Adición de la duración exacta en segundos para los archivos .wav/.mp3.
+3. Sincronización de Voces: Corrección del mapeo de voces (Dalia, Jorge, Álvaro, Elvira, Andrew Multilenguaje) entre frontend y backend.
+4. Prefijos Automáticos: Implementación de la función para añadir el prefijo "vozia_" opcionalmente a los archivos generados.
+
+FASE 4: RESOLUCIÓN DE CRASHES Y BUG DE DROPDOWNS
+----------------------------------------------
+1. Pantalla Negra (Fix): Se identificó que 'backdrop-filter: blur' causaba crasheos en el motor Qt de pywebview. Se eliminaron los filtros pesados para garantizar estabilidad al redimensionar.
+2. Expansión Infinita (Intento 1): Se intentó corregir el crecimiento de los dropdowns (caja blanca) eliminando transiciones CSS y forzando dimensiones rígidas.
+3. Importación Nativa: Se cambió el selector de archivos web por el diálogo nativo de Windows (webview.OPEN_DIALOG) mediante el backend para total fiabilidad.
+4. Contador de Palabras: Se reemplazó la etiqueta "Voz" en el resumen por un contador dinámico de palabras del texto TTS.
+5. Filtrado de Subtítulos: Se restringió la vista de procesamiento a solo archivos de audio (.wav/.mp3).
+
+FASE 5: SOLUCIÓN DEFINITIVA (EN CURSO)
+------------------------------------
+1. Componente CustomSelect: Debido a que el bug de expansión es inherente al motor Qt WebEngine con <select> nativos, se ha procedido a crear un componente de Dropdown personalizado en React (divs + botones) que no dispara el error de auto-layout del engine.
+2. Restauración de index.css: Regreso a la configuración original de la plantilla para asegurar paridad visual 1:1.
+
+--------------------------------------------------------------------------------
+PRÓXIMOS PASOS:
+- Compilar frontend con CustomSelect.
+- Verificar estabilidad total en el motor local.
+
+FASE 7: OPTIMIZACIÓN Y AGILIZACIÓN (2026-03-15)
+-----------------------------------------------
+1. Agilización de Subtítulos: Cambio del modelo Whisper de "medium" a "base". El modelo medium es extremadamente pesado para CPUs sin GPU dedicada, lo que causaba lentitud o bloqueos (trabado). El modelo "base" es mucho más rápido y suficiente para transcripciones de alta calidad en español/inglés.
+2. Revisión del Botón "Añadir Archivos": Se detectó que el botón en el panel central no estaba respondiendo correctamente en algunos entornos. Se refuerza la llamada al bridge nativo y se asegura el feedback visual en la barra de estado.
+3. Optimización de Memoria: Al usar un modelo más ligero, la aplicación consume menos recursos, evitando que la interfaz se congele durante el procesamiento.
+
+FASE 8: CORRECCIONES FINALES Y SELECTOR WHISPER (2026-03-15)
+---------------------------------------------------------
+1. Botón Cambiar Ubicación: Se añadió el método `change_data_dir` en el backend usando `tkinter.filedialog`. El botón del panel izquierdo ahora es totalmente funcional.
+2. Selector de Modelo Whisper: Se añadió una nueva opción en el panel de subtítulos para elegir entre modelo "Base (rápido)" y "Medium (preciso)". Esto permite al usuario priorizar velocidad o calidad según su hardware.
+3. Formato TXT Unificado: El archivo .txt generado es ahora una copia exacta del .srt (incluyendo numeración y tiempos), cumpliendo con el requerimiento de paridad total entre ambos formatos.
+4. Build de Producción: Frontend recompilado y bridge de comunicación verificado.
+
+ESTADO ACTUAL: Todo operativo. Botones corregidos y funciones de subtítulos optimizadas.
